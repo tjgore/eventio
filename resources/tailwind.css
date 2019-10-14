@@ -1,0 +1,37 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+* {
+    transition: all 0.3s linear;
+}
+
+/* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+/* total width */
+.content::-webkit-scrollbar {
+    background-color:#fff;
+    width:16px
+}
+
+/* background of the scrollbar except button or resizer */
+.content::-webkit-scrollbar-track {
+    background-color:#1d1f21
+}
+
+/* scrollbar itself */
+.content::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius:16px;
+    border: 5px solid #1d1f21;
+}
+
+.content::-webkit-scrollbar-corner {
+    color: #1d1f21;
+}
+
+/* set button(top and bottom of the scrollbar) */
+.content::-webkit-scrollbar-button { display:none; }
