@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const Nav = () => {
+const Nav = ({ menuItems }) => {
 
     const toggleMenu = (id) => {
         document.querySelector(id).classList.toggle('hidden');
@@ -19,29 +19,16 @@ const Nav = () => {
         </div>
         <div id="menu" className=" hidden block h-full w-full lg:h-auto lg:w-auto lg:flex lg:ml-auto pt-1">
             <ul className="font-bold pb-8 px-8 lg:p-0 text-lg">
-                <li className="block lg:inline-block mx-4 lg:p-0 py-4">
+                { menuItems.map((item, key) => {
+                    return !item.fields.type ? (<li key={key} className="block lg:inline-block mx-4 lg:p-0 py-4">
                     <Link href="/about">
-                        <a className="lg:hover:text-pink-500">About</a>
+                        <a className="lg:hover:text-pink-500">{item.fields.realName}</a>
                     </Link>
-                </li>
-                <li className="block lg:inline-block mx-4 lg:p-0 py-4">
-                    <a href="#" className="lg:hover:text-pink-500">Speakers</a>
-                </li>
-                <li className="block lg:inline-block mx-4 lg:p-0 py-4">
-                    <a href="#" className="lg:hover:text-pink-500">Schedule</a>
-                </li>
-                <li className="block lg:inline-block mx-4 lg:p-0 py-4">
-                    <a href="#" className="lg:hover:text-pink-500">Tickets</a>
-                </li>
-                <li className="block lg:inline-block mx-4 lg:p-0 py-4">
-                    <a href="#" className="lg:hover:text-pink-500">Reviews</a>
-                </li>
-                <li className="block lg:inline-block mx-4 lg:p-0 py-4">
-                    <a href="#" className="lg:hover:text-pink-500">Sponsors</a>
-                </li>
-                <li className="block lg:inline-block mx-4 lg:my-0 lg:ml-6 ml-4 my-4 lg:my-0">
+                    </li>) : 
+                    (<li className="block lg:inline-block mx-4 lg:my-0 lg:ml-6 ml-4 my-4 lg:my-0">
                     <a href="#" className="rounded p-3 bg-pink-600 text-white hover:bg-pink-700">Register</a>
-                </li>
+                    </li>)
+                })}
             </ul>
 
         </div>

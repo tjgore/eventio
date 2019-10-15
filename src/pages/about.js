@@ -1,7 +1,16 @@
 import Layout from '../../components/Layout'
+import Nav from '../../components/Nav'
 
-const About = () => {
+import { createClient } from 'contentful'
+
+const client = createClient({
+    space: "7a7vm4iaa5sv",
+    accessToken: "-KtfxbKPmrnL2o1J4BLXTU2LspmWF8pTbO1k5MAjPPc"
+  });
+
+const About = ({ menuItems }) => {
     return(<Layout>
+         <Nav menuItems={menuItems} />
          <section className="bg-transparent bg-center bg-no-repeat bg-cover" style={{ backgroundImage: "url(/images/header.jpg)" }}>
             <div className="bg-grad-dark h-full">
                 <div className="pt-24 lg:pt-32 pb-24 text-white px-8 lg:px-32">
@@ -83,6 +92,15 @@ const About = () => {
             </div>
         </section>
     </Layout>)
+}
+
+About.getInitialProps = async() => {
+
+    const menu = await client.getEntry('YctVkGXoXFBwVT6Hpf4ih')
+
+    const menuItems = menu.fields.menuItems
+
+    return { menuItems }
 }
 
 export default About

@@ -1,16 +1,25 @@
 import Layout from '../../components/Layout'
+import Nav from '../../components/Nav'
 
-const Index = () => {
+import { createClient } from 'contentful'
+
+const client = createClient({
+    space: "7a7vm4iaa5sv",
+    accessToken: "-KtfxbKPmrnL2o1J4BLXTU2LspmWF8pTbO1k5MAjPPc"
+  });
+
+const Index = ({ menuItems, homePage }) => {
 
     return (<Layout>
-        <section className="bg-transparent bg-center bg-no-repeat bg-cover" style={{ backgroundImage: "url(/images/header.jpg)" }}>
+         <Nav menuItems={menuItems} />
+        <section className="bg-transparent bg-center bg-no-repeat bg-cover" style={{ backgroundImage: `url(${homePage.fields.backgroundImage.fields.file.url})` }}>
             <div className="bg-grad-dark h-full">
                 <div className="pt-24 lg:pt-48 pb-56 text-white p-8 lg:px-32">
-                    <h4 className="font-bold text-2xl text-pink-500">June 12, 2022</h4>
-                    <h1 className="text-4xl lg:text-6xl leading-tight font-bold pt-2 pb-3">Tech Digital <br /> Conference 2022</h1>
-                    <h6 className="font-bold mb-4">Curabitur non luctus lorem. Cras tincidunt <br /> nisi eget elit commodo, a fringilla est hendreri.</h6>
+                    <h4 className="font-bold text-2xl text-pink-500">{homePage.fields.eventDate}</h4>
+                    <h1 className="text-4xl lg:text-6xl leading-tight font-bold pt-2 pb-3 lg:w-1/2 w-full">{homePage.fields.headerText}</h1>
+                    <h6 className="font-bold mb-4 lg:w-1/2 w-full">{homePage.fields.headerBody.content[0].content[0].value}</h6>
                     <div className="mt-8">
-                        <a href="#" className="rounded py-3 px-4 bg-pink-600 text-white hover:bg-pink-700 font-bold">Get Tickets</a>
+                        { homePage.fields.button ? ( <a href="#" className="rounded py-3 px-4 bg-pink-600 text-white hover:bg-pink-700 font-bold">{homePage.fields.buttonText}</a>) : null }
                     </div>
                 </div>
             </div>
@@ -18,7 +27,7 @@ const Index = () => {
 
         <section className="lg:mb-10 mb-6">
             <div className="flex justify-center lg:mx-32 bg-grad-pink relative text-white p-8 lg:rounded-lg top-5">
-                <h1 className="lg:text-5xl text-xl absolute top-2 lg:inset-2 font-extrabold">Counting Every Minute! </h1>
+                <h1 className="lg:text-5xl text-xl absolute top-2 lg:inset-2 font-extrabold">{homePage.fields.countdownText} </h1>
                 <div className="flex flex-col text-center leading-tight lg:pt-4">
                     <h5 className="lg:text-6xl text-3xl font-black">123</h5>
                     <p className="lg:text-lg text-sm font-medium">Days</p>
@@ -43,20 +52,15 @@ const Index = () => {
 
         <section className="lg:px-20 px-4 lg:py-12 flex lg:flex-row flex-col">
             <div className="w-full md:w-1/2 lg:pr-12 pr-0">
-                <h1 className="text-3xl font-bold mb-3">
-                    <span className="bg-pink-500 text-white px-2">About</span> the <br /> Tech Conference
-            </h1>
-                <p>
-                    Exhibz is produced by the team behind Metl Summit and Fiver Collision two
-                    of the largest and fastest growing education conferences.
-            <br /><br />
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            <br /><br />
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+                <h1 className="text-3xl font-bold mb-3 lg:w-1/2 w-full">
+                    <span className="bg-pink-500 text-white px-2">{ homePage.fields.aboutTitle.split(" ").shift() }</span> { homePage.fields.aboutTitle.substr(homePage.fields.aboutTitle.indexOf(" ") + 1) }
+                </h1>
+                {
+                    homePage.fields.aboutBody.content.map((content, key) => (<p className="mb-4">{content.content[0].value}</p>) )
+                }
             </div>
             <div className="w-full md:w-1/2 lg:pt-0 pt-10">
-                <img src="/images/event.png" alt="event" />
+                <img src={homePage.fields.aboutImage.fields.file.url} alt="event" />
             </div>
         </section>
 
@@ -150,6 +154,16 @@ const Index = () => {
         </section>
 
     </Layout>)
+}
+
+Index.getInitialProps = async() => {
+
+    const homePage = await client.getEntry('40PceDsQUNneCWAy7Bu0FO')
+    const menu = await client.getEntry('YctVkGXoXFBwVT6Hpf4ih')
+
+    const menuItems = menu.fields.menuItems
+
+    return { menuItems, homePage }
 }
 
 export default Index
