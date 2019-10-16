@@ -1,10 +1,11 @@
 module.exports = {
     theme: {
-        inset: {
-            '5': '-5rem',
-            '2': '-2rem'
-        },
-        extend: {}
+        extend: {
+            inset: {
+                '5': '-5rem',
+                '2': '-2rem'
+            },
+        }
     },
     variants: {},
     plugins: [

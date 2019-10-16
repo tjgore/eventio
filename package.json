@@ -16,9 +16,12 @@
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "contentful": "^7.10.0",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.7.0",
     "next": "^9.1.1",
     "nprogress": "^0.2.0",
     "react": "^16.10.2",
+    "react-countdown-now": "^2.1.1",
     "react-dom": "^16.10.2",
     "tailwindcss": "^1.1.2"
   }
