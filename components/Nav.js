@@ -23,12 +23,12 @@ const Nav = ({ menuItems }) => {
                     return item.fields.type ?  
                     (<li key={key} className="block lg:inline-block mx-4 lg:my-0 lg:ml-6 ml-4 my-4 lg:my-0">
                     <Link href={item.fields.urlPath} as={item.fields.urlAs}>
-                    <a className="rounded p-3 bg-pink-600 text-white hover:bg-pink-700">{item.fields.realName}</a>
+                    <a className="rounded p-3 bg-pink-600 text-white hover:bg-pink-700" onClick={() => toggleMenu("#menu")}>{item.fields.realName}</a>
                     </Link>
                 </li>) :
                     (<li key={key} className="block lg:inline-block mx-4 lg:p-0 py-4">
                     <Link href={item.fields.urlPath} as={item.fields.urlAs}>
-                        <a className="lg:hover:text-pink-500 cursor-pointer">{item.fields.realName}</a>
+                        <a className="lg:hover:text-pink-500 cursor-pointer" onClick={() => toggleMenu("#menu")}>{item.fields.realName}</a>
                     </Link>
                     </li>)
                 })}
